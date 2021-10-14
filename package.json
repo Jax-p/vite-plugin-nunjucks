@@ -1,0 +1,35 @@
+{
+  "name": "vite-plugin-nunjucks",
+  "version": "0.1.0",
+  "description": "Vite plugin for Nunjucks",
+  "main": "dist/index.js",
+  "author": "Jax-p",
+  "license": "MIT",
+  "private": false,
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "purgecss"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jax-p/vite-plugin-nunjucks"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "prepublishOnly": "yarn build"
+  },
+  "devDependencies": {
+    "@types/node": "^16.10.8",
+    "@types/nunjucks": "^3.2.0",
+    "tsup": "^5.4.0",
+    "typescript": "^4.4.4"
+  },
+  "peerDependencies": {
+    "vite": "^2.0.0"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.3",
+    "vite": "^2.6.7"
+  }
+}
