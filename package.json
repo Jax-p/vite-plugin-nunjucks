@@ -9,7 +9,7 @@
   "keywords": [
     "vite",
     "vite-plugin",
-    "purgecss"
+    "nunjucks"
   ],
   "repository": {
     "type": "git",
