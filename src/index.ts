@@ -4,7 +4,7 @@ import nunjucks, {renderString} from 'nunjucks';
 import {nunjucksPluginOptions} from "./types";
 import {defaultConfigureOptions, defaultPluginOptions} from "./defaults";
 
-export default (options: nunjucksPluginOptions) => {
+export default (options: nunjucksPluginOptions = {}) => {
     options = {...defaultPluginOptions, ...options};
     nunjucks.configure({
         ...defaultConfigureOptions,
