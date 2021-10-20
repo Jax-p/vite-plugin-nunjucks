@@ -4,6 +4,8 @@ import nunjucks, {renderString} from 'nunjucks';
 import {nunjucksPluginOptions} from "./types";
 import {defaultConfigureOptions, defaultPluginOptions} from "./defaults";
 
+export const globalVariablesKey = '*';
+
 export default (options: nunjucksPluginOptions = {}) => {
     options = {...defaultPluginOptions, ...options};
     nunjucks.configure({
@@ -23,7 +25,9 @@ export default (options: nunjucksPluginOptions = {}) => {
 
     function handleTransformHtml(html: string, context: IndexHtmlTransformContext) {
         const key = path.basename(context.path);
-        return renderString(html, options.variables?.[key] || {});
+        const globalVariables = options.variables[globalVariablesKey] || {};
+        const templateVariables = options.variables?.[key] || {};
+        return renderString(html, {...globalVariables, ...templateVariables});
     }
 
     function handleHotUpdate(context: HmrContext): void|[] {
