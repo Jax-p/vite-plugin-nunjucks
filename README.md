@@ -133,6 +133,26 @@ My modified filter content
 My modified extension content
 ```
 
+### Async filter
+If you need asynchronous filter you can pass `nunjucksFilter` instead of `nunjucksFilterCallback` _(see `types.ts` for more info)_
+```JavaScript
+import nunjucks from 'vite-plugin-nunjucks'
+
+export default {
+    plugins: [
+        nunjucks({
+            nunjucksEnvironment: {
+                filters: {someFilter: {
+                    async: true,
+                    filter: someFilter
+                }},
+            }
+        }),
+    ]
+}
+```
+```
+
 ### Own environment
 You can use a your own environment that you configure entirely
 ```JavaScript
