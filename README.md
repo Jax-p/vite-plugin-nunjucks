@@ -151,7 +151,6 @@ export default {
     ]
 }
 ```
-```
 
 ### Own environment
 You can use a your own environment that you configure entirely
