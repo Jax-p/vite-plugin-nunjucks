@@ -119,7 +119,7 @@ const SomeExtension = {
     }
 }
 ```
-then you can use in the template:
+then you can use it in the template:
 ```njk
 {{ 'some text' | someFilter }}
 
@@ -134,7 +134,7 @@ My modified extension content
 ```
 
 ### Async filter
-If you need asynchronous filter you can pass `nunjucksFilter` instead of `nunjucksFilterCallback` _(see `types.ts` for more info)_
+If you need asynchronous filter you can pass `nunjucksFilter` instead of `nunjucksFilterCallback`:
 ```JavaScript
 import nunjucks from 'vite-plugin-nunjucks'
 
@@ -153,11 +153,11 @@ export default {
 ```
 
 ### Own environment
-You can use a your own environment that you configure entirely
+You can use your own environment that you configure entirely
 ```JavaScript
 import nunjucks from 'vite-plugin-nunjucks'
 
-const env = nunjucks.Environment(/* someOptions */)
+const env = new nunjucks.Environment(/* someOptions */)
 env.addFilter('someFilter', someFilter);
 env.addExtension('someExtension', SomeExtension);
 export default {
