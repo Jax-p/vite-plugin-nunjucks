@@ -121,7 +121,7 @@ const SomeExtension = {
 ```
 then you can use in the template:
 ```njk
-{{ some text | someFilter }}
+{{ 'some text' | someFilter }}
 
 {% something %}
     Some content
