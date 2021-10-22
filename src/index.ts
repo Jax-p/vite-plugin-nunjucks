@@ -1,7 +1,7 @@
 import * as path from 'path';
 import {HmrContext, IndexHtmlTransformContext} from "vite";
-import nunjucks, {renderString} from 'nunjucks';
-import {nunjucksPluginOptions} from "./types";
+import nunjucks, {Environment} from 'nunjucks';
+import {nunjucksEnvironmentOptions, nunjucksFilterCallback, nunjucksPluginOptions} from "./types";
 import {defaultConfigureOptions, defaultPluginOptions} from "./defaults";
 
 export const globalVariablesKey = '*';
@@ -13,6 +13,10 @@ export default (options: nunjucksPluginOptions = {}) => {
         ...(options.nunjucksConfigure||{})
     });
 
+    const env = options.nunjucksEnvironment instanceof Environment
+        ? options.nunjucksEnvironment
+        : createNunjucksEnvironment(options.nunjucksEnvironment || {});
+
     return {
         name: 'nunjucks',
         enforce: 'pre',
@@ -23,11 +27,23 @@ export default (options: nunjucksPluginOptions = {}) => {
         }
     }
 
-    function handleTransformHtml(html: string, context: IndexHtmlTransformContext) {
+    function createNunjucksEnvironment({extensions, filters}: nunjucksEnvironmentOptions): Environment {
+        const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(process.cwd()))
+        Object.keys(extensions||{}).forEach(name => env.addExtension(name, extensions[name]));
+        Object.keys(filters||{}).forEach(name => {
+            const filter = filters[name];
+            (typeof filter === 'object' && filter.hasOwnProperty('filter'))
+                ? env.addFilter(name, filter.filter, filter.async)
+                : env.addFilter(name, filter as nunjucksFilterCallback)
+        });
+        return env;
+    }
+
+    function handleTransformHtml(html: string, context: IndexHtmlTransformContext): string {
         const key = path.basename(context.path);
         const globalVariables = options.variables[globalVariablesKey] || {};
         const templateVariables = options.variables?.[key] || {};
-        return renderString(html, {...globalVariables, ...templateVariables});
+        return env.renderString(html, {...globalVariables, ...templateVariables});
     }
 
     function handleHotUpdate(context: HmrContext): void|[] {

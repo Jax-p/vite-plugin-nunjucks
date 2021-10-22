@@ -77,11 +77,85 @@ export default {
 </html>
 ```
 
+## Environment
+Since v0.1.4 you can pass [custom filters](https://mozilla.github.io/nunjucks/api.html#custom-filters) and [extensions](https://mozilla.github.io/nunjucks/api.html#custom-tags) to the environment.   
+Config example:
+```JavaScript
+import nunjucks from 'vite-plugin-nunjucks'
+
+export default {
+    plugins: [
+        nunjucks({
+            nunjucksEnvironment: {
+                filters: {someFilter: someFilter},
+                extensions: {someExtension: SomeExtension}
+            }
+        }),
+    ]
+}
+```
+Filter should look like this _(for more info check the Nunjucks documentation)_
+```JavaScript
+const someFilter = (val) => {
+    // ... some logic
+    return 'My modified filter content';
+}
+```
+and extension like this:
+```JavaScript
+const SomeExtension = {
+    tags: ['something'],
+    parse: function(parser, nodes, lexer) {
+        const [tag] = this.tags
+        const tok = parser.nextToken()
+        const args = parser.parseSignature(null, true)
+        parser.advanceAfterBlockEnd(tok.value)
+        const body = parser.parseUntilBlocks(tag, `end${tag}`)
+        parser.advanceAfterBlockEnd()
+        return new nodes.CallExtension(this, 'run', args, [body])
+    },
+    run (args) {
+        return 'My modified extension content'
+    }
+}
+```
+then you can use in the template:
+```njk
+{{ some text | someFilter }}
+
+{% something %}
+    Some content
+{% endsomething %}
+```
+and the result should be:
+```html
+My modified filter content
+My modified extension content
+```
+
+### Own environment
+You can use a your own environment that you configure entirely
+```JavaScript
+import nunjucks from 'vite-plugin-nunjucks'
+
+const env = nunjucks.Environment(/* someOptions */)
+env.addFilter('someFilter', someFilter);
+env.addExtension('someExtension', SomeExtension);
+export default {
+    plugins: [
+        nunjucks({nunjucksEnvironment: env}),
+    ]
+}
+```
+
 ## Options
 
 | Parameter | Type  | Default | Description |
 | ----------- | ----------- | ----------- | ----------- |
 | templatesDir | `string` | `./src/html` | Absolute path where are HTML templates located. Example: `path.resolve(process.cwd(), 'src', 'myTemplates')`
 | variables | `Record<string, object>` | `{}` | Variables for each entry point. Example `{ 'index.html': {username:'John'} }`
-| nunjucksConfigure | `Nunjucks.ConfigureOptions` | `{noCache:true}` | [Configure options for Nunjucks](https://mozilla.github.io/nunjucks/api.html#configure)
+| nunjucksConfigure | `nunjucks.ConfigureOptions` | `{noCache:true}` | [Configure options for Nunjucks](https://mozilla.github.io/nunjucks/api.html#configure)
+| nunjucksEnvironment | `nunjucksEnvironmentOptions OR nunjucks.Environment` | `{noCache:true}` | Configure Nunjucks environment or pass your own env
+
+
 
