@@ -1,12 +1,12 @@
 import * as path from 'path';
-import {HmrContext, IndexHtmlTransformContext} from "vite";
 import nunjucks, {Environment} from 'nunjucks';
+import {HmrContext, IndexHtmlTransformContext, Plugin} from "vite";
 import {nunjucksEnvironmentOptions, nunjucksFilterCallback, nunjucksPluginOptions} from "./types";
 import {defaultConfigureOptions, defaultPluginOptions} from "./defaults";
 
 export const globalVariablesKey = '*';
 
-export default (options: nunjucksPluginOptions = {}) => {
+export default (options: nunjucksPluginOptions = {}): Plugin => {
     const env = options.nunjucksEnvironment instanceof Environment
         ? options.nunjucksEnvironment
         : createNunjucksEnvironment(options.nunjucksEnvironment || {});
@@ -22,7 +22,6 @@ export default (options: nunjucksPluginOptions = {}) => {
     }
 
     function createNunjucksEnvironment({extensions, filters}: nunjucksEnvironmentOptions): Environment {
-        //const env = new nunjucks.Environment(new nunjucks.FileSystemLoader(process.cwd()))
         options = {...defaultPluginOptions, ...options};
         const env = nunjucks.configure({
             ...defaultConfigureOptions,
