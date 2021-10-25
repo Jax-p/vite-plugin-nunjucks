@@ -40,7 +40,7 @@ export default (options: nunjucksPluginOptions = {}) => {
 
     function handleTransformHtml(html: string, context: IndexHtmlTransformContext): string {
         const key = path.basename(context.path);
-        const globalVariables = options.variables[globalVariablesKey] || {};
+        const globalVariables = options.variables?.[globalVariablesKey] || {};
         const templateVariables = options.variables?.[key] || {};
         return env.renderString(html, {...globalVariables, ...templateVariables});
     }
