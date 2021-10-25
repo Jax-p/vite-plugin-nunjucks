@@ -1,8 +1,14 @@
 # vite-plugin-nunjucks
+
+[![Node.js CI](https://github.com/Jax-p/vite-plugin-nunjucks/actions/workflows/node.js.yml/badge.svg)](https://github.com/Jax-p/vite-plugin-nunjucks/actions/workflows/node.js.yml)
+[![npm Downloads](https://img.shields.io/npm/dt/vite-plugin-nunjucks)](https://www.npmjs.com/package/vite-plugin-nunjucks)
+
 [Vite](https://github.com/vitejs/vite) plugin for [Nunjucks](https://github.com/mozilla/nunjucks).
 
-✔️ Can include templates   
-✔️ Can pass parameters for each entry point (HTML)
+Supports:    
+📂 - [Templates and layouts](https://mozilla.github.io/nunjucks/templating.html) 🔗     
+📃 - Variables for each entry point (HTML) and global scope    
+🎠 - [Custom filters](https://mozilla.github.io/nunjucks/api.html#custom-filters) 🔗 and [extensions](https://mozilla.github.io/nunjucks/api.html#custom-tags) 🔗
 
 ## Install
 **Yarn**
