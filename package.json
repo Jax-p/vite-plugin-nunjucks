@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-nunjucks",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Vite plugin for Nunjucks",
   "main": "dist/index.js",
   "author": "Jax-p",

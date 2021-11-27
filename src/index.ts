@@ -1,6 +1,6 @@
 import * as path from 'path';
 import nunjucks, {Environment} from 'nunjucks';
-import {HmrContext, IndexHtmlTransformContext, Plugin} from "vite";
+import {HmrContext, IndexHtmlTransformContext, IndexHtmlTransformResult, Plugin} from "vite";
 import {nunjucksEnvironmentOptions, nunjucksFilterCallback, nunjucksPluginOptions} from "./types";
 import {defaultConfigureOptions, defaultPluginOptions} from "./defaults";
 
@@ -37,11 +37,19 @@ export default (options: nunjucksPluginOptions = {}): Plugin => {
         return env;
     }
 
-    function handleTransformHtml(html: string, context: IndexHtmlTransformContext): string {
+    function handleTransformHtml(html: string, context: IndexHtmlTransformContext): IndexHtmlTransformResult | void | Promise<IndexHtmlTransformResult | void> {
         const key = path.basename(context.path);
         const globalVariables = options.variables?.[globalVariablesKey] || {};
         const templateVariables = options.variables?.[key] || {};
-        return env.renderString(html, {...globalVariables, ...templateVariables});
+        return new Promise((resolve, reject) => {
+            env.renderString(html, {...globalVariables, ...templateVariables}, function(err, res) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(res);
+                }
+            });    
+        });
     }
 
     function handleHotUpdate(context: HmrContext): void|[] {
