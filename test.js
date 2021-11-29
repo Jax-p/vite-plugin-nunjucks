@@ -29,8 +29,25 @@ test('it can create plugin with custom environment', () => {
 test('it can transform HTML', () => {
     const name = 'John';
     const plugin = nunjucksPlugin({variables: {'*': {name: name}}});
-    const html = plugin.transformIndexHtml.transform('<p>Hello {{name}}</p>', { path: '' })
-    expect(html).toEqual(`<p>Hello ${name}</p>`);
+    return expect(plugin.transformIndexHtml.transform('<p>Hello {{name}}</p>', { path: '' })).resolves.toEqual(`<p>Hello ${name}</p>`);
+});
+
+test('it can transform HTML with async filters', () => {
+    const plugin = nunjucksPlugin({
+        nunjucksEnvironment: {
+            filters: {
+                someFilter: {
+                    async: true,
+                    filter: (data, callback) => {
+                        setTimeout(() => {
+                            callback(null, data);
+                        }, 100);
+                    },
+                },
+            },
+        }
+    });
+    return expect(plugin.transformIndexHtml.transform('<p>Hello {{ "async"|someFilter }}</p>', { path: '' })).resolves.toEqual('<p>Hello async</p>');
 });
 
 const checkPluginKeys = (plugin) => {
