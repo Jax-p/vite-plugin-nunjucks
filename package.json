@@ -2,7 +2,15 @@
   "name": "vite-plugin-nunjucks",
   "version": "0.1.10",
   "description": "Vite plugin for Nunjucks",
+  "type": "module",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
   "author": "Jax-p",
   "license": "MIT",
   "private": false,
