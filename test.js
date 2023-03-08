@@ -1,5 +1,5 @@
 const nunjucks = require("nunjucks");
-const nunjucksPlugin = require('./dist/index.cjs').default;
+const nunjucksPlugin = require('./dist').default;
 
 test('it can create plugin without options', () => {
     const plugin = nunjucksPlugin();
