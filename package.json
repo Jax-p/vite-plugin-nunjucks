@@ -2,7 +2,6 @@
   "name": "vite-plugin-nunjucks",
   "version": "0.1.10",
   "description": "Vite plugin for Nunjucks",
-  "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "exports": {
