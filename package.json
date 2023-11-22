@@ -28,7 +28,7 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/node": "^20.9.4",
+    "@types/node": "^18.18.2",
     "@types/nunjucks": "^3.2.4",
     "jest": "^27.3.1",
     "tsup": "^8.0.1",
