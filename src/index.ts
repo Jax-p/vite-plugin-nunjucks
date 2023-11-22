@@ -55,6 +55,7 @@ export default (options: nunjucksPluginOptions = {}): Plugin => {
     function handleHotUpdate(context: HmrContext): void|[] {
         const filename = path.resolve(context.file)
         if (!filename.startsWith(options.templatesDir)) return;
+        if (!filename.endsWith('.html') && !filename.endsWith('.njk')) return;
         console.info(`Template file ${path.basename(filename)} has been changed. Sending full-reload.`);
         context.server.ws.send({type: 'full-reload'});
         return []
