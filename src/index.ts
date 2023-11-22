@@ -16,8 +16,8 @@ export default (options: nunjucksPluginOptions = {}): Plugin => {
         enforce: 'pre',
         handleHotUpdate: handleHotUpdate,
         transformIndexHtml: {
-            enforce: 'pre',
-            transform: handleTransformHtml
+            order: 'pre',
+            handler: handleTransformHtml
         }
     }
 
