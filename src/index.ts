@@ -38,7 +38,7 @@ export default (options: nunjucksPluginOptions = {}): Plugin => {
     }
 
     function handleTransformHtml(html: string, context: IndexHtmlTransformContext): IndexHtmlTransformResult | void | Promise<IndexHtmlTransformResult | void> {
-        const key = path.basename(context.path);
+        const key = options.useContextPathKey ? context.path : path.basename(context.path);
         const globalVariables = options.variables?.[globalVariablesKey] || {};
         const templateVariables = options.variables?.[key] || {};
         return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export default (options: nunjucksPluginOptions = {}): Plugin => {
                 } else {
                     resolve(res);
                 }
-            });    
+            });
         });
     }
 
