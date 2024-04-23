@@ -5,9 +5,9 @@
 
 [Vite](https://github.com/vitejs/vite) plugin for [Nunjucks](https://github.com/mozilla/nunjucks).
 
-Supports:    
-📂 - [Templates and layouts](https://mozilla.github.io/nunjucks/templating.html) 🔗     
-📃 - Variables for each entry point (HTML) and global scope    
+Supports:
+📂 - [Templates and layouts](https://mozilla.github.io/nunjucks/templating.html) 🔗
+📃 - Variables for each entry point (HTML) and global scope
 🎠 - [Custom filters](https://mozilla.github.io/nunjucks/api.html#custom-filters) 🔗 and [extensions](https://mozilla.github.io/nunjucks/api.html#custom-tags) 🔗
 
 ## Install
@@ -84,7 +84,7 @@ export default {
 ```
 
 ## Environment
-Since v0.1.4 you can pass [custom filters](https://mozilla.github.io/nunjucks/api.html#custom-filters) and [extensions](https://mozilla.github.io/nunjucks/api.html#custom-tags) to the environment.   
+Since v0.1.4 you can pass [custom filters](https://mozilla.github.io/nunjucks/api.html#custom-filters) and [extensions](https://mozilla.github.io/nunjucks/api.html#custom-tags) to the environment.
 Config example:
 ```JavaScript
 import nunjucks from 'vite-plugin-nunjucks'
@@ -178,6 +178,7 @@ export default {
 | Parameter | Type  | Default | Description |
 | ----------- | ----------- | ----------- | ----------- |
 | templatesDir | `string` | `./src/html` | Absolute path where are HTML templates located. Example: `path.resolve(process.cwd(), 'src', 'myTemplates')`
+| useContextPathKey | `boolean` | `false` | If `true` entry point keys use path . Example `{ '/index.html': {active:'Home'}, '/about/index.html': {active: 'About'} }`
 | variables | `Record<string, object>` | `{}` | Variables for each entry point. Example `{ 'index.html': {username:'John'} }`
 | nunjucksConfigure | `nunjucks.ConfigureOptions` | `{noCache:true}` | [Configure options for Nunjucks](https://mozilla.github.io/nunjucks/api.html#configure)
 | nunjucksEnvironment | `nunjucksEnvironmentOptions OR nunjucks.Environment` | `{noCache:true}` | Configure Nunjucks environment or pass your own env

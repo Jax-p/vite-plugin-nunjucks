@@ -5,6 +5,7 @@ export type templateVariables = Record<string, object>
 export interface nunjucksPluginOptions {
     templatesDir?: string,
     variables?: templateVariables,
+    useContextPathKey?: boolean,
     nunjucksConfigure?: ConfigureOptions,
     nunjucksEnvironment?: nunjucksEnvironmentOptions | Environment
 }
